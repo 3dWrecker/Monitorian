@@ -37,17 +37,17 @@ internal class WmiMonitorItem : MonitorItem
 
 	public override AccessResult UpdateBrightness(int brightness = -1)
 	{
-		if (IsInternal)
-		{
-			this.Brightness = PowerManagement.GetActiveSchemeBrightness();
+		//if (IsInternal)
+		//{
+		//	this.Brightness = PowerManagement.GetActiveSchemeBrightness();
 
-			this.BrightnessSystemAdjusted = !PowerManagement.IsAdaptiveBrightnessEnabled
-				? -1 // Default
-				: (0 <= brightness)
-					? brightness
-					: MSMonitor.GetBrightness(DeviceInstanceId);
-		}
-		else
+		//	this.BrightnessSystemAdjusted = !PowerManagement.IsAdaptiveBrightnessEnabled
+		//		? -1 // Default
+		//		: (0 <= brightness)
+		//			? brightness
+		//			: MSMonitor.GetBrightness(DeviceInstanceId);
+		//}
+		//else
 		{
 			this.Brightness = (0 <= brightness)
 				? brightness
@@ -61,14 +61,14 @@ internal class WmiMonitorItem : MonitorItem
 		if (brightness is < 0 or > 100)
 			throw new ArgumentOutOfRangeException(nameof(brightness), brightness, "The brightness must be from 0 to 100.");
 
-		if (IsInternal)
-		{
-			if (PowerManagement.SetActiveSchemeBrightness(brightness))
-			{
-				this.Brightness = brightness;
-				return AccessResult.Succeeded;
-			}
-		}
+		//if (IsInternal)
+		//{
+		//	if (PowerManagement.SetActiveSchemeBrightness(brightness))
+		//	{
+		//		this.Brightness = brightness;
+		//		return AccessResult.Succeeded;
+		//	}
+		//}
 		else
 		{
 			brightness = ArraySearch.GetNearest(_brightnessLevels, (byte)brightness);
